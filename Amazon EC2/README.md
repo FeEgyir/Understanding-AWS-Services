@@ -1,7 +1,11 @@
 # Amazon EC2: Your Virtual Computer in the Cloud ☁️💻
 
-![EC2 Illustration](https://d1.awsstatic.com/product-marketing/EC2/EC2-Home-product-page-hero.2c67214e5b4c5b2a286a9d6e8d4b6b8a7d4a8d5.png)  
-*(Imagine EC2 as renting a computer that lives on the internet instead of your desk)*
+<div align="center">
+  <img src="https://www.future.ad.jp/wp-content/uploads/2023/04/20230417_ec2.png" width="400">
+  <h3>Your Virtual Servers in the Cloud</h3>
+  <h3>(Imagine EC2 as renting a computer that lives on the internet instead of your desk)</h3>
+</div>
+
 
 ## 🌟 What is EC2?
 EC2 (Elastic Compute Cloud) lets you rent virtual computers in Amazon's data centers. It's like borrowing a powerful laptop from Amazon that:
@@ -34,10 +38,13 @@ EC2 (Elastic Compute Cloud) lets you rent virtual computers in Amazon's data cen
 - Simple file storage (use [S3](../Amazon%20S3/README.md))
 
 ## 🧑‍💻 Basic
-  EC2 -->|Uses| EBS Storage
-  EC2 -->|Protected by| Security Groups
-  EC2 -->|Sends logs to| CloudWatch
-  EC2 -->|Sits inside| VPC
+```mermaid
+graph LR
+    EC2 -->|Uses| EBS[(EBS Storage)]
+    EC2 -->|Protected by| SG[Security Groups]
+    EC2 -->|Sends logs to| CloudWatch
+    EC2 -->|Sits inside| VPC
+```
 
 ## ⚠️ Watch Out For...
 - **Stopped ≠ Terminated**:  
@@ -48,13 +55,13 @@ EC2 (Elastic Compute Cloud) lets you rent virtual computers in Amazon's data cen
 
 ## 🤔 EC2 vs Other Options
 | Need | Better Choice | Why |
-
+|-------|---------------|-----|
 | Run code occasionally | Lambda | No servers to manage |
 | Host simple website | S3 Static Hosting | Cheaper & simpler |
 | Run containers | ECS/EKS | Better for microservices |
 
 ## 🚀 Where to Go From Here
-1. Launch your first instance  
-2. Connect to it via SSH
-3. Host a simple website
-4. Automate with Launch Templates  
+1. How to Launch an EC2 instance and SSH into it 
+2. Understanding Basition Host
+3. Understanding AWS USer Data
+4. Understanding EC2 Launch Template and Source Template  
