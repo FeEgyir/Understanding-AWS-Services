@@ -50,15 +50,14 @@ From the EC2 dashboard, I found the orange "Launch instance" button and clicked 
 
 5. **Set Network Settings**:
    For this basic session on EC2, I kept everything default. I didn't create any custom VPC, subnet, or security group. 
-
    The only thing I needed to do was check "Allow SSH traffic" and select "Anywhere" from the dropdown. This means I'm allowing remote SSH login to this instance from any IP address in the world (0.0.0.0/0).
 
-   I noticed I could select "My IP" instead, which would only allow SSH access from my current IP address (82.119.170.75). For demo purposes, I kept it as "Anywhere", though for production environments, I'd restrict this access.
+   I noticed I could select "My IP" instead, which would only allow SSH access from my current IP address. For demo purposes, I kept it as "Anywhere", though for production environments, I'd restrict this access.
 
-6. **Configured Storage**:
+7. **Configured Storage**:
    I kept the default 8GB since this was just for learning purposes.
 
-7. **Advanced Details**:
+8. **Advanced Details**:
    I didn't change anything here for this basic example.
 
 Once I filled in all the required information, I clicked "Launch instance". It took just a moment to launch.
@@ -77,6 +76,7 @@ When I clicked on my instance ID, I found all the details about my instance:
 - Key pair name that I associated with it
 
 I found this dashboard to be very useful for troubleshooting and investigating EC2 instances.
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/85d59cc1886aa22f079f4f3d0529fc40977e7a59/Amazon%20EC2/Launch%20and%20SSH%20into%20an%20EC2%20Instance/images/lanuched.png)
 
 ## SSHing into My EC2 Instance
 
@@ -84,19 +84,11 @@ To SSH into my EC2 instance, I clicked on the instance ID and found the "Connect
 
 I followed these instructions:
 
-1. First, I needed to change the permissions of my private key file that I downloaded earlier. I opened a terminal and navigated to where my file existed:
+1. First, I needed to ensure I have the my private key file that I downloaded earlier. I opened a terminal and navigated to where my file existed:
 
    ```bash
    ls -lt
    ```
-
-   I could see my "test-demo-key.pem" file. The permissions were quite open, and I needed to restrict them:
-
-   ```bash
-   chmod 400 test-demo-key.pem
-   ```
-
-   Running `ls -lt` again showed that previously it had read/write permissions, but now it had only read permission.
 
 2. Next, I copied the SSH command from the AWS console, which looked like:
 
