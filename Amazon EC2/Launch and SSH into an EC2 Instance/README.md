@@ -103,15 +103,16 @@ I followed these instructions:
    - The last part is the public DNS name of the instance
 
    I noted that instead of the public DNS, I could also use the public IPv4 address of the instance - both would work fine.
-![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/afcf7657cede8aac2ced19bfa8137090d2a1211f/Amazon%20EC2/Launch%20and%20SSH%20into%20an%20EC2%20Instance/images/ssh.png)
 
-4. I ran the SSH command in my terminal. When prompted "Are you sure you want to connect?", I typed "yes".
+3. I ran the SSH command in my terminal. When prompted "Are you sure you want to connect?", I typed "yes".
 
 I was now logged into my AWS EC2 instance! To verify I was in the right place, I checked:
 
 - The IP address information shown when I logged in
 - Compared it with the private IP in my AWS console to confirm I was in the correct EC2 instance
 - I also ran `uname -r` to verify the kernel version
+
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/2eff01d59fbbae917aa54a326e25e51f8331adc3/Amazon%20EC2/Launch%20and%20SSH%20into%20an%20EC2%20Instance/images/kernel.png)
 
 ## Terminating My EC2 Instance
 
