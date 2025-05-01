@@ -17,6 +17,7 @@ This is a basic chapter to help me understand EC2 instances before moving to mor
 
 ### Navigating to EC2 Dashboard
 To start working with EC2 instances, I went to my AWS console and typed "EC2" in the search box. Clicking on EC2 took me to the EC2 dashboard where I could see all running instances. In my personal AWS account, I had zero instances running at this point.
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/9c4efd25ecfb095f9c29cd07242587a1dfaf9d16/Amazon%20EC2/Launch%20and%20SSH%20into%20an%20EC2%20Instance/images/Instance.png)
 
 ### Creating a New Instance
 From the EC2 dashboard, I found the orange "Launch instance" button and clicked on it. Now I needed to specify several parameters essential to start an EC2 instance:
