@@ -11,9 +11,7 @@ In this part of my AWS learning journey, I'll be setting up EC2 instances in bot
 - Route table creation and association
 - EC2 instance provisioning within subnets
 
-To begin, I need an active AWS account. I've already logged into my AWS console homepage.
-
-<!-- IMAGE SUGGESTION: Screenshot of AWS console homepage after logging in -->
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/156fe2d526ad32af2be848429c18e2c16e190e31/All%20Images/Setup%20EC2%2C%20VPC%2C%20Subnet%2C%20Route%20Table%2C%20Internet%20Gateway%2C%20NAT%20Gateway%2C.png)
 
 ## Creating a VPC
 
@@ -374,7 +372,7 @@ To verify my public instance was properly configured:
 2. From a new terminal window on my local machine, I pinged the public IP address of my EC2 instance
 3. The ping was successful, confirming my public instance was accessible from the internet
 
-# Testing Private EC2 Instance Connectivity
+## Testing Private EC2 Instance Connectivity
 
 To fully verify my network setup, I needed to test internet connectivity from both my public and private EC2 instances.
 
