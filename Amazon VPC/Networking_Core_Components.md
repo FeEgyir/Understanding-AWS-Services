@@ -182,11 +182,8 @@ The next component I need to create is a NAT Gateway for my private subnet. A NA
 - NAT Gateway: Enables one-way communication where resources in private subnets can initiate outbound connections to the internet, but external systems cannot initiate connections to those resources
 
 I found NAT Gateways essential when I needed to update or maintain resources like EC2 instances or RDS databases in private subnets. These resources need internet access to download updates and patches, but I wanted to keep them secure from inbound connections.
-<!-- IMAGE SUGGESTION: A conceptual diagram showing the difference between Internet Gateway (two-way) and NAT Gateway (one-way) traffic flows -->
 
 ## Creating a NAT Gateway
-
-*[Screenshot opportunity: NAT Gateway section in AWS Console]*
 
 To create a NAT Gateway:
 
@@ -197,8 +194,6 @@ To create a NAT Gateway:
 
 > **Important:** NAT Gateways must be placed in public subnets to function correctly.
 
-*[Screenshot opportunity: NAT Gateway creation form with subnet selection]*
-
 5. For the Elastic IP allocation, I clicked "Allocate Elastic IP"
    - The system assigned IP `13.50.172.193` to my NAT Gateway
 
@@ -206,15 +201,11 @@ To create a NAT Gateway:
 
 6. I skipped the additional settings and clicked "Create NAT Gateway"
 
-*[Screenshot opportunity: NAT Gateway creation confirmation with "pending" status]*
-
 After a few minutes, the status changed from "pending" to "available" with a green indicator.
 
 > **Cost Warning:** Unlike some AWS services, NAT Gateways are not free. I'm careful to delete them when not in use to avoid unnecessary charges.
 
 ## Configuring Route Tables for NAT Gateway
-
-*[Screenshot opportunity: Route Tables section in AWS Console]*
 
 With my NAT Gateway ready, I needed to update the private route table:
 
@@ -225,7 +216,6 @@ With my NAT Gateway ready, I needed to update the private route table:
    - Destination: `0.0.0.0/0` (all traffic)
    - Target: Selected my newly created NAT Gateway from the dropdown
 
-*[Screenshot opportunity: Edit routes form showing NAT Gateway selection]*
 
 5. I clicked "Save changes"
 
@@ -237,8 +227,6 @@ To ensure everything was set up correctly, I reviewed both route tables:
 
 - **Private Route Table:** Now includes a route to the NAT Gateway (`0.0.0.0/0` → NAT Gateway)
 - **Public Route Table:** Contains a route to the Internet Gateway (`0.0.0.0/0` → Internet Gateway)
-
-*[Screenshot opportunity: Side-by-side comparison of public and private route tables]*
 
 ## Creating and Connecting to EC2 Instances 
 
