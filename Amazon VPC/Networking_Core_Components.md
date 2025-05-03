@@ -347,12 +347,10 @@ The command returned all the IP information details, confirming that my public E
 
 Next, I wanted to demonstrate that the private EC2 instance cannot be accessed directly from the internet.
 
-*[Screenshot opportunity: Diagram showing access pattern - external machine → public EC2 → private EC2]*
-
 From my local machine's terminal, I attempted to ping the private EC2 instance using its private IP address:
 
 ```bash
-ping 11.0.2.104
+ping 11.0.2.222
 ```
 
 As expected, all requests timed out. This confirms that my private EC2 instance is not directly accessible from outside the VPC, which is exactly what I wanted for security purposes.
@@ -362,10 +360,8 @@ As expected, all requests timed out. This confirms that my private EC2 instance 
 However, I confirmed that the private EC2 instance is accessible from within the VPC by pinging it from my public EC2 instance:
 
 ```bash
-ping 11.0.2.104
+ping 11.0.2.222
 ```
-
-*[Screenshot opportunity: Terminal showing successful ping from public EC2 to private EC2]*
 
 The ping was successful, confirming connectivity between my public and private subnets within the VPC.
 
@@ -376,59 +372,7 @@ To access my private EC2 instance for administration, I needed to:
 1. First SSH into my public EC2 instance (already completed)
 2. Then SSH from the public instance to the private instance
 
-This is a common pattern known as a "bastion host" or "jump server" approach.
-
-### Transferring the Private Key
-
-To SSH from the public instance to the private instance, I needed the private key on my public EC2:
-
-1. On my public EC2 instance, I created a new private key file:
-
-```bash
-touch AWS-Demo-SSH-Key-For-Private-EC2.pem
-```
-
-2. I opened the file for editing:
-
-```bash
-nano AWS-Demo-SSH-Key-For-Private-EC2.pem
-```
-
-3. I copied the entire private key content from my local machine and pasted it into the file on the public EC2 instance
-   
-   > **Note:** When copying SSH keys, ensure there are no extra spaces, line breaks, or missing characters.
-
-4. I set the correct permissions on the key file:
-
-```bash
-chmod 400 AWS-Demo-SSH-Key-For-Private-EC2.pem
-```
-
-*[Screenshot opportunity: Terminal showing the key file being created and permission set]*
-
-### Connecting to Private EC2
-
-With the key in place, I used the following command to connect to my private EC2 instance:
-
-```bash
-ssh -i AWS-Demo-SSH-Key-For-Private-EC2.pem ubuntu@11.0.2.104
-```
-
-After accepting the security prompt, I successfully connected to my private EC2 instance.
-
-*[Screenshot opportunity: Terminal showing successful SSH connection to private EC2]*
-
-## Testing Internet Access from Private EC2
-
-The final test was to verify that my private EC2 instance could access the internet through the NAT Gateway:
-
-```bash
-curl ipinfo.io
-```
-
-*[Screenshot opportunity: Terminal showing successful curl response from private EC2]*
-
-The command returned the IP information details, confirming that my private EC2 instance had outbound internet connectivity through the NAT Gateway.
+This is a common pattern known as a "bastion host" or "jump server" approach. This was done to verify that my private EC2 instance could access the internet through the NAT Gateway
 
 ## How the NAT Gateway Works in This Scenario
 
@@ -450,11 +394,9 @@ I've now successfully set up a complete AWS networking environment with:
 3. NAT Gateway for private subnet outbound internet access
 4. Route tables correctly configured for both subnets
 5. EC2 instances in both subnets with appropriate security groups
-6. Verified connectivity according to our design requirements
+6. Verified connectivity according to the design requirements
 
 This architecture provides a secure foundation for deploying applications where some components need to be publicly accessible (like web servers in the public subnet) while keeping sensitive components (like databases in the private subnet) protected from direct internet access.
-
-*[Screenshot opportunity: AWS console showing the complete architecture with all components]*
 
 
 ## Key Concepts Learned So Far
