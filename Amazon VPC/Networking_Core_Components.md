@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/c01415f8-dada-4fb7-939d-dcf9e3fec9ef)# AWS VPC and EC2 Setup: 
+# AWS VPC and EC2 Setup: 
 
 ## Introduction
 
