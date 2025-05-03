@@ -148,14 +148,14 @@ With both route tables created, I needed to associate them with their respective
    - Selected my public subnet ("AWS-demo-public-subnet")
    - Clicked "Save associations"
 
-![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/ad781a713bacf46588504ab54aff15916583bf74/All%20Images/subnet%20ass.png)
-
 2. For the private route table:
    - Selected the private route table
    - Went to the "Subnet associations" tab
    - Clicked "Edit subnet associations"
    - Selected my private subnet ("AWS-demo-private-subnet")
    - Clicked "Save associations"
+
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/ad781a713bacf46588504ab54aff15916583bf74/All%20Images/subnet%20ass.png)
 
 ### Adding a Route to the Internet Gateway
 
