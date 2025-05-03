@@ -11,7 +11,7 @@ In this part of my AWS learning journey, I'll be setting up EC2 instances in bot
 - Route table creation and association
 - EC2 instance provisioning within subnets
 
-![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/156fe2d526ad32af2be848429c18e2c16e190e31/All%20Images/Setup%20EC2%2C%20VPC%2C%20Subnet%2C%20Route%20Table%2C%20Internet%20Gateway%2C%20NAT%20Gateway%2C.png)
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/afafff2c615cf0a45a229c69b8e812aee500749c/All%20Images/Setup%20EC2%2C%20VPC%2C%20Subnet%2C%20Route%20Table%2C%20Internet%20Gateway%2C%20NAT%20Gateway%2C%20(1).png)
 
 ## Creating a VPC
 
