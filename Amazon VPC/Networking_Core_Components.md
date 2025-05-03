@@ -1,4 +1,4 @@
-# AWS VPC and EC2 Setup: 
+![image](https://github.com/user-attachments/assets/c01415f8-dada-4fb7-939d-dcf9e3fec9ef)# AWS VPC and EC2 Setup: 
 
 ## Introduction
 
@@ -104,8 +104,6 @@ Here's how I created it:
 3. Named it "AWS-demo-IGW" (IGW being short for Internet Gateway)
 4. Clicked "Create internet gateway"
 
-<!-- IMAGE SUGGESTION: Screenshot of the Internet Gateway creation page -->
-
 Once created, the Internet Gateway was in a "detached" state. I needed to attach it to my VPC:
 
 1. Selected the newly created Internet Gateway
@@ -115,7 +113,7 @@ Once created, the Internet Gateway was in a "detached" state. I needed to attach
 
 The Internet Gateway was successfully attached to my VPC.
 
-<!-- IMAGE SUGGESTION: Screenshot showing the attached state of the Internet Gateway -->
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/560c8a04a5ff3bd6c6e3450b682abbe699564d07/All%20Images/igw.png)
 
 ## Creating and Configuring Route Tables
 
