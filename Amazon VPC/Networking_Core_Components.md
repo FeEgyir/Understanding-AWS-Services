@@ -24,8 +24,6 @@ Here's how I created my VPC:
 3. AWS offers two options: "VPC only" and "VPC and more"
    - While "VPC and more" would create multiple resources at once, I chose "VPC only" to better understand each component
 
-<!-- IMAGE SUGGESTION: Screenshot of the VPC creation page showing the "VPC only" option selected -->
-
 4. I entered these settings:
    - Name: AWS-demo-VPC
    - IPv4 CIDR block: 11.0.0.0/16
@@ -35,7 +33,7 @@ Here's how I created my VPC:
 
 My VPC was successfully created.
 
-<!-- IMAGE SUGGESTION: Screenshot showing the successful creation confirmation with VPC details -->
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/0970f46db04bc647dc53eecf9f0d7a253624f4c2/All%20Images/VPC.png)
 
 ## Understanding CIDR Ranges
 
