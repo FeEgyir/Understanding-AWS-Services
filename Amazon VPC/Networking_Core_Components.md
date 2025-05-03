@@ -266,8 +266,6 @@ For the networking configuration:
 6. I kept the default storage (8GB)
 7. I clicked "Launch instance"
 
-*[Screenshot opportunity: EC2 launch confirmation screen]*
-
 ## Creating the Private EC2 Instance
 
 Next, I created a second EC2 instance for my private subnet.
@@ -283,8 +281,6 @@ Next, I created a second EC2 instance for my private subnet.
 
 ### Configuring Private Network Settings
 
-*[Screenshot opportunity: Private EC2 network settings configuration]*
-
 For the networking configuration:
 
 1. I selected my demo VPC
@@ -299,9 +295,9 @@ For the networking configuration:
 5. I kept the default 8GB storage
 6. I clicked "Launch instance"
 
-## Connecting to the Public EC2 Instance
+![images](https://github.com/FeEgyir/Understanding-AWS-Services/blob/273f996409160a79b2f8be2065aedfe3d23e2c27/All%20Images/instances.png)
 
-*[Screenshot opportunity: EC2 Connect panel showing SSH instructions]*
+## Connecting to the Public EC2 Instance
 
 After both instances were running (showing a green "Running" status):
 
@@ -311,42 +307,31 @@ After both instances were running (showing a green "Running" status):
 4. In my local terminal, I navigated to my `AWS-Demo` directory where I stored my key files
 5. I ran `ls -l` to verify the keys were present
 
-### Setting Proper Key Permissions
-
-For security reasons, the SSH key files need restrictive permissions:
-
-```bash
-chmod 400 AWS-Demo-SSH-Key-For-Public-EC2.pem
-chmod 400 AWS-Demo-SSH-Key-For-Private-EC2.pem
-```
-
-I ran these commands to make both key files read-only.
-
 ### Establishing SSH Connection
 
 I copied the SSH command from the AWS console:
 
 ```bash
-ssh -i "AWS-Demo-SSH-Key-For-Public-EC2.pem" ubuntu@ec2-xx-xx-xx-xx.compute-1.amazonaws.com
+ssh -i "C:\path\to\aws-demo-ssh-key-public-ec2.pem" ubuntu@ec2-xx-xx-xx-xx.compute-1.amazonaws.co
 ```
 
 After running this command:
 1. I accepted the security prompt by typing "yes"
 2. I successfully connected to my public EC2 instance
 
-*[Screenshot opportunity: Terminal showing successful SSH connection]*
+![images alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/273f996409160a79b2f8be2065aedfe3d23e2c27/All%20Images/public%20ec2%20ssh.png)
 
 ## Testing Connectivity
 
 To verify my public instance was properly configured:
 
-1. I confirmed the private IP address was `11.0.1.250`, matching what I saw in the AWS console
+1. I confirmed the private IP address was `11.0.1.218`, matching what I saw in the AWS console
 2. From a new terminal window on my local machine, I pinged the public IP address of my EC2 instance
 3. The ping was successful, confirming my public instance was accessible from the internet
 
-## Testing Private EC2 Instance Connectivity
+## Testing Prublic EC2 Instance Connectivity
 
-To fully verify my network setup, I needed to test internet connectivity from both my public and private EC2 instances.
+To fully verify my network setup, I needed to test internet connectivity from my public instances.
 
 First, I confirmed internet access from my public EC2 instance:
 
@@ -354,7 +339,7 @@ First, I confirmed internet access from my public EC2 instance:
 curl ipinfo.io
 ```
 
-*[Screenshot opportunity: Terminal showing successful curl response from public EC2]*
+![images alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/273f996409160a79b2f8be2065aedfe3d23e2c27/All%20Images/curl.png)
 
 The command returned all the IP information details, confirming that my public EC2 instance had proper internet connectivity through the Internet Gateway.
 
