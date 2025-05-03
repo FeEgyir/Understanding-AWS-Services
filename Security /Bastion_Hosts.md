@@ -6,9 +6,6 @@ I wanted to understand the concept of a Bastion host in AWS, so I started by thi
 
 Imagine a castle that can only be accessed through a heavily guarded tunnel. Anyone wanting to enter must pass through this fortified tunnel first. People with valid access can pass through without problems, but intruders or those without proper authorization will be stopped. This tunnel represents our Bastion host in the AWS context.
 
-![Bastion Host Analogy](images/bastion_analogy.png)
-*A diagram showing a castle (protected resources), a guarded tunnel/entrance (Bastion host), and a user/potential intruder*
-
 ### The AWS Connection
 
 In AWS, this concept translates to:
@@ -18,7 +15,7 @@ In AWS, this concept translates to:
 3. The actual resources (like EC2 instances) reside in the private subnet
 4. Users must first connect to the Bastion host, and only after authentication can they reach resources in the private subnet
 
-![AWS Bastion Architecture](images/aws_bastion_architecture.png)
+![AWS Bastion Architecture](https://github.com/FeEgyir/Understanding-AWS-Services/blob/3e696426cae9ef536fa5d8ac044efc3f3edc64b5/All%20Images/Bastion%20Host.png)
 *Diagram showing public subnet with Bastion host, private subnet with EC2 instance, and user accessing through Internet Gateway*
 
 The Bastion host acts as a secure checkpoint that screens all access attempts. Only after passing through this security layer can users reach the protected resources in the private subnet.
