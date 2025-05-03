@@ -170,8 +170,6 @@ To enable internet access for the public subnet, I needed to add a route to the 
    - Target: Selected "Internet Gateway" and then chose my Internet Gateway from the dropdown
 6. Clicked "Save changes"
 
-<!-- IMAGE SUGGESTION: Screenshot of adding the 0.0.0.0/0 route to the Internet Gateway -->
-
 The destination 0.0.0.0/0 is important to understand - it's a catch-all that means "send any traffic not destined for within the VPC to the Internet Gateway." This effectively enables internet access for resources in the public subnet.
 
 ## Understanding the NAT Gateway Configuration
@@ -205,6 +203,8 @@ After a few minutes, the status changed from "pending" to "available" with a gre
 
 > **Cost Warning:** Unlike some AWS services, NAT Gateways are not free. I'm careful to delete them when not in use to avoid unnecessary charges.
 
+![images alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/e4587e7295cd23e521a9523c6bdb35c09109e7df/All%20Images/natgw.png)
+
 ## Configuring Route Tables for NAT Gateway
 
 With my NAT Gateway ready, I needed to update the private route table:
@@ -228,11 +228,11 @@ To ensure everything was set up correctly, I reviewed both route tables:
 - **Private Route Table:** Now includes a route to the NAT Gateway (`0.0.0.0/0` → NAT Gateway)
 - **Public Route Table:** Contains a route to the Internet Gateway (`0.0.0.0/0` → Internet Gateway)
 
+![images alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/e4587e7295cd23e521a9523c6bdb35c09109e7df/All%20Images/routes.png)  
+
 ## Creating and Connecting to EC2 Instances 
 
 After setting up my VPC networking components, I needed to create EC2 instances to test the configuration. I started with an instance for my public subnet.
-
-*[Screenshot opportunity: EC2 dashboard showing "Launch Instance" button]*
 
 1. From the AWS Console homepage, I searched for "EC2" and clicked on the EC2 service
 2. I clicked on "Launch Instance" to start the creation process
@@ -241,8 +241,6 @@ After setting up my VPC networking components, I needed to create EC2 instances 
 5. I kept the 64-bit architecture and chose t3.micro as my instance type
 
 ### Creating an SSH Key Pair
-
-*[Screenshot opportunity: Key pair creation dialog box]*
 
 When creating EC2 instances, I needed an SSH key pair to securely connect:
 
@@ -254,8 +252,6 @@ When creating EC2 instances, I needed an SSH key pair to securely connect:
 > **Note:** The private key file is critical for SSH access. I moved this file to a dedicated folder (`AWS-Demo`) for safekeeping.
 
 ### Configuring Network Settings
-
-*[Screenshot opportunity: Network settings configuration panel]*
 
 For the networking configuration:
 
