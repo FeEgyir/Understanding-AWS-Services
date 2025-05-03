@@ -45,8 +45,6 @@ I used a CIDR calculator (found by searching "CIDR range calculator" on Google) 
    - It showed I would have 65,536 available IP addresses within my VPC
    - The IP range starts at 11.0.0.0 and ends at 11.0.255.255
 
-<!-- IMAGE SUGGESTION: Screenshot of CIDR calculator showing the results for 11.0.0.0/16 -->
-
 2. I also explored how changing the suffix number affects the available IPs:
    - Smaller numbers (like /8) provide more IP addresses
    - Larger numbers (like /32) provide fewer IPs (a /32 gives just one IP address)
@@ -66,8 +64,6 @@ For these subnets, I'll use smaller CIDR blocks:
 
 Using the CIDR calculator, I confirmed that each /24 subnet provides 256 IP addresses (ranging from x.x.x.0 to x.x.x.255).
 
-<!-- IMAGE SUGGESTION: Screenshot of CIDR calculator showing the results for a /24 subnet -->
-
 Here's how I created the subnets:
 
 ### Creating the Public Subnet
@@ -80,8 +76,6 @@ Here's how I created the subnets:
    - IPv4 CIDR block: 11.0.1.0/24 (providing 256 IP addresses)
 4. I noticed AWS confirmed I would have 256 IPs available in this subnet
 
-<!-- IMAGE SUGGESTION: Screenshot of the public subnet creation form filled out -->
-
 ### Creating the Private Subnet
 
 1. While still in the subnet creation flow, I clicked "Add new subnet"
@@ -93,7 +87,7 @@ Here's how I created the subnets:
 
 Both my subnets were created successfully within my VPC.
 
-<!-- IMAGE SUGGESTION: Screenshot showing both subnets listed in the subnet dashboard -->
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/8bc57ace553087f6ed9a376eb23a52a69ab13565/All%20Images/subnets.png)
 
 ## Creating an Internet Gateway
 
