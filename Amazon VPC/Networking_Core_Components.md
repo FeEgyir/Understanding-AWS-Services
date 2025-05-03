@@ -132,8 +132,6 @@ I needed to create two route tables:
    - Selected my VPC ("AWS-demo-VPC")
    - Clicked "Create route table"
 
-<!-- IMAGE SUGGESTION: Screenshot of creating the public route table -->
-
 4. Repeated the process for the private route table:
    - Named it "AWS-demo-private-route-table"
    - Selected the same VPC
@@ -150,7 +148,7 @@ With both route tables created, I needed to associate them with their respective
    - Selected my public subnet ("AWS-demo-public-subnet")
    - Clicked "Save associations"
 
-<!-- IMAGE SUGGESTION: Screenshot showing the subnet association page for the public route table -->
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/ad781a713bacf46588504ab54aff15916583bf74/All%20Images/subnet%20ass.png)
 
 2. For the private route table:
    - Selected the private route table
