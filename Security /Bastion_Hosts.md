@@ -15,7 +15,7 @@ In AWS, this concept translates to:
 3. The actual resources (like EC2 instances) reside in the private subnet
 4. Users must first connect to the Bastion host, and only after authentication can they reach resources in the private subnet
 
-![AWS Bastion Architecture](https://github.com/FeEgyir/Understanding-AWS-Services/blob/3e696426cae9ef536fa5d8ac044efc3f3edc64b5/All%20Images/Bastion%20Host.png)
+![AWS Bastion Architecture](https://github.com/FeEgyir/Understanding-AWS-Services/blob/380dcecd1be9c37b668fee1006765ab762c9abb7/All%20Images/Bastion%20Host%20Setup.png)
 *Diagram showing public subnet with Bastion host, private subnet with EC2 instance, and user accessing through Internet Gateway*
 
 The Bastion host acts as a secure checkpoint that screens all access attempts. Only after passing through this security layer can users reach the protected resources in the private subnet.
@@ -36,8 +36,7 @@ First, I needed to create a Virtual Private Cloud (VPC), essentially a virtual d
 6. Kept the default tags
 7. Clicked "Create VPC"
 
-![VPC Creation](images/vpc_creation.png)
-*Screenshot showing the VPC creation form with filled details*
+![VPC Creation](https://github.com/FeEgyir/Understanding-AWS-Services/blob/380dcecd1be9c37b668fee1006765ab762c9abb7/All%20Images/VPC.png)
 
 After creation, I could see my new VPC alongside the default VPC that AWS provides. For this demonstration, I used my newly created VPC.
 
@@ -57,8 +56,7 @@ Once created, I attached this Internet Gateway to my VPC:
 3. Selected "test-VPC"
 4. Clicked "Attach internet gateway"
 
-![Internet Gateway Attachment](images/igw_attachment.png)
-*Screenshot showing the process of attaching an internet gateway to a VPC*
+![Internet Gateway Attachment](https://github.com/FeEgyir/Understanding-AWS-Services/blob/380dcecd1be9c37b668fee1006765ab762c9abb7/All%20Images/igw.png)
 
 ### Step 3: Create Public and Private Subnets
 
@@ -81,8 +79,7 @@ Now I created two subnets - one public subnet for my Bastion host and one privat
 4. Set the CIDR block to `12.0.3.0/24`
 5. Clicked "Create subnet"
 
-![Subnet Creation](images/subnet_creation.png)
-*Screenshot of subnet creation form with both subnets configured*
+![Subnet Creation](https://github.com/FeEgyir/Understanding-AWS-Services/blob/380dcecd1be9c37b668fee1006765ab762c9abb7/All%20Images/subnests.png)
 
 ### Step 4: Create Route Tables
 
@@ -114,9 +111,6 @@ Next, I added a route to allow internet access:
 5. For the target, selected "Internet Gateway" and chose test-IGW
 6. Clicked "Save changes"
 
-![Public Route Table Configuration](images/public_rt_config.png)
-*Screenshot showing route table with internet gateway route added*
-
 #### Creating a Route Table for the Private Subnet:
 
 1. Went back to "Route Tables"
@@ -135,6 +129,8 @@ After creating the private route table, I associated it with my private subnet:
 
 For the private subnet, I didn't need to add any additional routes, as the default local route allowed communication within the VPC but prevented direct internet access - exactly what I wanted for my private resources.
 
+![Public Route Table Configuration](https://github.com/FeEgyir/Understanding-AWS-Services/blob/380dcecd1be9c37b668fee1006765ab762c9abb7/All%20Images/rts.png)
+
 At this point, I had set up the networking foundation for my Bastion host architecture:
 
 1. Created a VPC
@@ -149,7 +145,7 @@ Now I created the EC2 instance that would serve as my Bastion host in the public
 1. Navigated to EC2 in the AWS Console
 2. Clicked "Launch instance"
 3. Entered "test-ec2-public-instance-bastion" as the name
-4. Chose Ubuntu as the Amazon Machine Image (AMI)
+4. Chose Amazon Linux as the Amazon Machine Image (AMI)
 5. Selected t2.micro for the instance type (free tier eligible)
 6. Created a key pair for SSH access:
    
@@ -173,16 +169,13 @@ Now I created the EC2 instance that would serve as my Bastion host in the public
 8. Left the storage settings at their defaults
 9. Clicked "Launch instance"
 
-![Bastion Host EC2 Creation](images/bastion_ec2_creation.png)
-*Screenshot of EC2 creation page with Bastion host settings*
-
 ### Step 6: Create the Private Instance
 
 Next, I created an EC2 instance in the private subnet to represent my protected resource:
 
 1. Went back to EC2 dashboard and clicked "Launch instance" again
 2. Entered "test-ec2-private-instance" as the name
-3. Selected the same Ubuntu AMI
+3. Selected the same Amazon Linux AMI
 4. Chose t2.micro for the instance type
 5. Used the same key pair as before
 6. Configured network settings:
@@ -196,8 +189,7 @@ Next, I created an EC2 instance in the private subnet to represent my protected 
 7. Kept the default storage settings
 8. Clicked "Launch instance"
 
-![Private EC2 Creation](images/private_ec2_creation.png)
-*Screenshot of EC2 creation page with private instance settings*
+![Bastion EC2 and Private EC2 Creation](https://github.com/FeEgyir/Understanding-AWS-Services/blob/380dcecd1be9c37b668fee1006765ab762c9abb7/All%20Images/bh%20instance.png)
 
 After a few moments, both instances were in the "running" state, which I verified in the EC2 dashboard.
 
@@ -216,54 +208,61 @@ First, I connected to the Bastion host:
 Following these steps in my terminal:
 
 ```bash
-# Change the permissions of the private key file
-chmod 400 path/to/keys-for-bastion-host-demo.pem
-
 # Connect to the Bastion host using SSH
-ssh -i "path/to/keys-for-bastion-host-demo.pem" ubuntu@bastion-public-ip
+ssh -i "path/to/keys-for-bastion-host-demo.pem" ec2-user@bastion-public-ip
 ```
 
-![SSH to Bastion](images/ssh_to_bastion.png)
-*Terminal screenshot showing successful connection to Bastion host*
+![SSH to Bastion](https://github.com/FeEgyir/Understanding-AWS-Services/blob/380dcecd1be9c37b668fee1006765ab762c9abb7/All%20Images/bh%20ssh.png)
 
 ### Step 8: Copy the Private Key to the Bastion Host
 
 To connect from the Bastion host to the private instance, I needed my private key on the Bastion host:
 
-1. Opened a new terminal window on my local machine
-2. Displayed the content of my private key file:
+1. Start the SSH Agent Service, that is if it isn't running on your Windows 11 system. 
+2. Run these commands in PowerShell (as Administrator)::
    ```bash
-   cat path/to/keys-for-bastion-host-demo.pem
+   # Set the SSH-Agent service to start automatically
+   Set-Service ssh-agent -StartupType Automatic
+   # Start the service
+   Start-Service ssh-agent
+   # Verify it's running
+   Get-Service ssh-agent
    ```
-3. Copied the entire output
-4. Switched back to the terminal connected to the Bastion host
-5. Created a new file for the key:
-   ```bash
-   vi aws-ec2-key
-   ```
-6. Pasted the content, saved and exited (pressed ESC, then typed `:wq`)
-7. Set the correct permissions for the key file:
-   ```bash
-   chmod 400 aws-ec2-key
-   ```
+Expected output: Status should show Running.
 
-> **Note:** In production environments, this approach of copying the private key is not recommended for security reasons. A better practice would be to use SSH key forwarding or AWS Systems Manager Session Manager.
+3. Add Your SSH Key to the Agent
+   ```bash
+    ssh-add "path/to/keys-for-bastion-host-demo.pem"
+   ```
+4. If prompted, confirm the key is added by running: 
+   ```bash
+   ssh-add -L
+   ```
+5. Connect to the Bastion Host with Agent Forwarding
+   ```bash
+    ssh -A ec2-user@<BASTION_PUBLIC_IP>
+   ```
+Replace <BASTION_PUBLIC_IP> with your bastion’s actual IP.
+The -A flag enables agent forwarding.
 
 ### Step 9: Connect from the Bastion Host to the Private Instance
 
 Now I connected from the Bastion host to the private instance:
 
 1. Got the private IP address of my private instance from the AWS console
-2. From the Bastion host terminal, used SSH to connect to the private instance:
+2. From the Bastion host terminal, used SSH to connect to the private instance
    ```bash
-   ssh -i aws-ec2-key ubuntu@private-instance-ip
+   ssh ec2-user@<PRIVATE_INSTANCE_IP>
    ```
 3. Accepted the connection prompt
 
 To my satisfaction, I was now connected to the private EC2 instance through the Bastion host!
 
-![SSH to Private Instance](images/ssh_to_private_instance.png)
-*Terminal screenshot showing successful connection from Bastion to private instance*
+The private instance will authenticate using the forwarded key.
+
+> **Note:** You can aside the use of SSH key forwarding one can go with AWS Systems Manager Session Manager.
+
+![SSH to Private Instance](https://github.com/FeEgyir/Understanding-AWS-Services/blob/380dcecd1be9c37b668fee1006765ab762c9abb7/All%20Images/private%20ssh.png)
 
 ## Success! The Bastion Host Architecture is Working
 
@@ -327,18 +326,27 @@ If you encounter issues with this setup, check the following:
    - Default Network ACLs allow all traffic, but custom ACLs might be restrictive
    - Check both inbound and outbound rules
    
-4. Key permissions - make sure private key files have 400 permissions:
+4. Key permissions for MAC/Linux- make sure private key files have 400 permissions:
    ```bash
    chmod 400 path/to/your-key.pem
    ```
    
-5. VPC configuration - double-check that the VPC and subnet CIDR blocks don't overlap:
+5. Ensure SSH agent service is running on your window system
+    ```bash
+   Set-Service ssh-agent -StartupType Automatic
+   Start-Service ssh-agent
+   Get-Service ssh-agent
+   ```
+    
+6. If ssh-add still fails, restart PowerShell or reboot your machine.
+   
+7. VPC configuration - double-check that the VPC and subnet CIDR blocks don't overlap:
    - Use a tool like a CIDR calculator to verify proper subnet ranges
    - Ensure you can account for all IP addresses within your VPC
    
-6. EC2 instance status - confirm both instances are in the "running" state
+8. EC2 instance status - confirm both instances are in the "running" state
    
-7. Connectivity verification - use ping or telnet to test connectivity at different points:
+9. Connectivity verification - use ping or telnet to test connectivity at different points:
    ```bash
    # From Bastion host to private instance
    ping private-instance-ip
@@ -346,7 +354,8 @@ If you encounter issues with this setup, check the following:
    # Test SSH connectivity
    telnet private-instance-ip 22
    ```
-
+10. Verify the key is correct (e.g., no typos in the path).
+    
 ---
 
 This setup demonstrates how to implement the security principle of defense in depth by creating multiple layers of security controls. The Bastion host pattern is just one of many security patterns available in AWS, but it's an important one to understand and implement correctly.
