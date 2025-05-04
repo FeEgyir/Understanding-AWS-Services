@@ -12,7 +12,7 @@ Each service/subject contains:
 - **When to use**: Appropriate scenarios and alternatives
 
 ## Current Topics
-1. 1. [EC2 Instance Launch Guide](Amazon%20EC2/Launching_Instances.md)
+1. [EC2 Instance Launch Guide](Amazon%20EC2/Launching_Instances.md)
 2. [VPC Networking Fundamentals](Amazon%20VPC/Networking_Core_Components.md)
 3. [Bastion Host Architecture](Security/Bastion_Hosts.md)
 4. [EC2 User Data Scripts](Amazon%20EC2/User_Data.md)
