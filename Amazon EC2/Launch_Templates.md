@@ -29,9 +29,9 @@ From the EC2 dashboard, I clicked on "Launch Templates" in the left sidebar menu
 ### Step 2: Configuring Basic Details
 
 I started by providing the following information:
-- **Template name**: `ec2-instance-with-Docker-and-Apache2`
-- **Description**: `This template is for Apache2 and Docker`
-- **Template tags**: Added a tag with key `Name` and value `EC2-with-Docker-and-Apache2`
+- **Template name**: `ec2-instance-with-apache`
+- **Description**: `This template installs and configures Apache web server on Amazon Linux`
+- **Template tags**: Added a tag with key `Name` and value `EC2-with-Apache`
 
 ### Step 3: Selecting AMI and Instance Type
 
@@ -59,18 +59,18 @@ In the "Advanced details" section, I added the following user data script to ins
 
 ```bash
 #!/bin/bash
-# Install Apache2
-yes | sudo apt update
-yes | sudo apt install apache2 -y
+# Update package repositories
+yum update -y
 
-# Install Docker
-sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt update
-sudo apt install docker-ce -y
-sudo systemctl start docker
-sudo systemctl enable docker
+# Install Apache web server
+yum install -y httpd
+
+# Create a simple web page
+echo "<html><body><h1>Hello World from EC2 User Data!</h1><p>This server was configured automatically using EC2 user data.</p></body></html>" > /var/www/html/index.html
+
+# Start and enable Apache service
+systemctl start httpd
+systemctl enable httpd
 ```
 
 ### Step 8: Creating the Template
@@ -89,35 +89,45 @@ With my template ready, launching an instance became much simpler:
 Within minutes, my instance was up and running. I verified that everything worked by:
 
 1. Checking that Apache was installed by opening the instance's public IP in my browser
-2. Connecting to the instance via SSH and checking that Docker was installed using the `docker --version` command
+2. Connecting to the instance via SSH and  confirming the Apache installation
 
 ```bash
 # Command to SSH into the instance
-ssh -i "SSH.pem" ubuntu@ec2-instance-public-ip
-
-# Verifying Docker installation
-docker --version
+ssh -i "my-key.pem" ec2-user@ec2-instance-public-ip
 
 # Verifying Apache service status
-systemctl status apache2
+sudo systemctl status httpd
+
+# Checking Apache version
+httpd -v
+
+# Examining the default web page
+cat /var/www/html/index.html
+
+# Confirming Apache is set to start on boot
+sudo systemctl is-enabled httpd
 ```
 
 ## Creating a Template from an Existing Template
 
-What I found particularly useful was the ability to create new templates based on existing ones. I wanted to create a template that only installed Apache without Docker, so:
+What I found particularly useful was the ability to create new templates based on existing ones. I wanted to create a template that only installed Apache without any other services, so:
 
 1. I navigated to the "Launch Templates" section again
 2. Clicked "Create launch template"
-3. Named it "ec2-instance-with-Apache2"
-4. Under "Source template," I selected my previous template
+3. Named it "ec2-instance-with-apache-only"
+4. Under "Source template," I selected my previous template "ec2-instance-with-apache"
 5. AWS pre-filled all the settings from the source template
-6. I modified the user data script to remove the Docker installation part:
+6. I modified the user data script to keep only the essential Apache installation:
 
 ```bash
 #!/bin/bash
-# Install Apache2
-yes | sudo apt update
-yes | sudo apt install apache2 -y
+# Update package repositories
+yum update -y
+# Install Apache web server
+yum install -y httpd
+# Start and enable Apache service
+systemctl start httpd
+systemctl enable httpd
 ```
 
 7. Clicked "Create launch template"
@@ -133,7 +143,13 @@ To verify my second template worked correctly:
 3. SSH'd into the instance and verified Docker was NOT installed:
 
 ```bash
-# Check for Docker
+# Connect to instance
+ssh -i "my-key.pem" ec2-user@ec2-instance-public-ip
+
+# Check Apache status
+systemctl status httpd
+
+# Verify no other services were installed
 docker --version
 ```
 
