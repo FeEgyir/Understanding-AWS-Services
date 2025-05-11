@@ -1,4 +1,4 @@
-# AWS EC2 Instances: My Learning Notes
+# AWS EC2 Instances
 
 ## Introduction
 In this chapter of my AWS learning journey, I'm exploring AWS EC2 instances, one of the most fundamental building blocks when working with AWS. Having already covered the sign-up process, IAM user creation, and IAM roles and policies in the previous chapter, I'm now moving to EC2 as the next logical step in learning AWS.
