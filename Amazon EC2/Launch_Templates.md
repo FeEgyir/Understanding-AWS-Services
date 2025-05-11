@@ -1,4 +1,4 @@
-# Streamlining AWS EC2 Deployment with Launch Templates
+#AWS EC2 Deployment with Launch Templates
 
 After working with EC2 instances for a while, I found myself repeating the same configuration steps over and over. That's when I discovered AWS EC2 Launch Templates – a game-changer for my workflow. In this post, I'll share how I've been using launch templates to streamline my EC2 deployments.
 
