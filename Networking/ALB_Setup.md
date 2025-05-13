@@ -15,6 +15,7 @@ The architecture I aimed to build included:
 - **Target Group**: A logical group containing the EC2 instances.
 - **Application Load Balancer**: To route traffic to the target group.
 
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/d3ace5c5798233a5aa4b233d6fd5b1880c111b2a/All%20Images/Application%20%20Load%20Balancer.png)
 ```A diagram of the ALB architecture, showing a user accessing the ALB via the Internet Gateway, with traffic routed to two EC2 instances in separate public subnets within a VPC.```
 
 ## Step 1: Creating a VPC
@@ -98,6 +99,8 @@ I set up a route table to connect the public subnets to the Internet Gateway.
 
 This allowed resources in the public subnets to access and be accessed from the internet.
 
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/d3ace5c5798233a5aa4b233d6fd5b1880c111b2a/All%20Images/VPC.png)
+
 ## Step 5: Launching EC2 Instances
 I launched two EC2 instances in separate subnets, each running an Apache server configured via a user data script.
 
@@ -107,7 +110,7 @@ I launched two EC2 instances in separate subnets, each running an Apache server 
 2. Clicked Launch instance.
 3. Configured:
   - Name: `test-ec2-instance-1`
-  - AMI: Ubuntu Server (x86_64, latest, free tier eligible)
+  - AMI: Amazon Linux 2023 (x86_64, latest, free tier eligible)
   - Instance Type: t2.micro
   - Key Pair:
     - Created new: `test-ALB-demo-key-pair`
@@ -116,29 +119,32 @@ I launched two EC2 instances in separate subnets, each running an Apache server 
   - VPC: `test-vpc`
   - Subnet: `test-public-subnet-1a`
   - Auto-assign Public IP: Enabled
-  - Security Group: Created new; test-ec2-SG
-  - Rules:
+  - Security Group: Created new; `test-ec2-SG`
+  - Rules: This is to make them accessible from outside AWS environment
     - SSH (Port 22) from 0.0.0.0/0
     - HTTP (Port 80) from 0.0.0.0/0
+  
   - Storage: Default (8 GiB gp2)
   - User Data:
 ```bash
 #!/bin/bash
-apt-get update -y
-apt-get install apache2 -y
-systemctl start apache2
-systemctl enable apache2
+dnf update -y
+dnf install httpd -y
+systemctl start httpd
+systemctl enable httpd
 echo "<h1>Server: $(hostname)</h1>" > /var/www/html/index.html
 ```
 4. Clicked Launch instance.
 
 The user data script installs Apache, starts it, and creates an index.html file displaying the instance’s hostname.
 
+![images alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/90a03af32b10840d0f0690a65144f13c33578407/All%20Images/1.png)
+
 ### EC2 Instance 2 (Subnet 1b)
 
 1. Repeated for the second instance:
   - Name: `test-ec2-instance-2`
-  - AMI: Same Ubuntu Server
+  - AMI: Ubuntu Server (x86_64, latest, free tier eligible)
   - Instance Type: `t2.micro`
   - Key Pair: `test-ALB-demo-key-pair`
   - Network Settings:
@@ -147,10 +153,20 @@ The user data script installs Apache, starts it, and creates an index.html file 
     - Auto-assign Public IP: Enabled
     - Security Group: Reused `test-ec2-SG`
   - Storage: Default
-  - User Data: Same script
+  - User Data:
+```
+#!/bin/bash
+apt-get update -y
+apt-get install apache2 -y
+systemctl start apache2
+systemctl enable apache2
+echo "<h1>Server: $(hostname)</h1>" > /var/www/html/index.html
+```
 2. Clicked Launch instance.
 
-I waited for both instances to reach “running” status, then tested Apache by accessing each public IP in a browser, confirming hostnames and private IPs (e.g., `12.0.1.142`, `12.0.3.160`).
+![images alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/90a03af32b10840d0f0690a65144f13c33578407/All%20Images/2.png)
+
+I waited for both instances to reach “running” status, then tested Apache by accessing each public IP in a browser, confirming hostnames and private IPs (e.g., `12.0.1.195`, `12.0.3.75`).
 
 ## Step 6: Creating a Target Group
 I created a Target Group to group the EC2 instances for ALB routing.
@@ -198,10 +214,12 @@ I configured the ALB to route traffic to the Target Group.
   - Listeners and routing:
     - Protocol: HTTP
     - Port: 80
-    - Default action: Forward to test-ec2-ALB-demo-TG
+    - Default action: `test-ec2-ALB-demo-TG`
   - Tags: None
 5. Verified the summary (VPC, subnets, security groups, Target Group).
 6. Clicked Create load balancer.
+
+![image alt](https://github.com/FeEgyir/Understanding-AWS-Services/blob/d3ace5c5798233a5aa4b233d6fd5b1880c111b2a/All%20Images/TG.png)
 
 The ALB took a few minutes to transition from “provisioning” to “active”.
 
@@ -211,7 +229,7 @@ I tested the ALB’s traffic distribution.
 1. From the Load Balancers page, selected the ALB.
 2. Copied its DNS name (e.g., `test-LB-for-ec2-demo-123456.elb.eu-central-1.amazonaws.com`).
 3. Accessed the DNS name in a browser, refreshing multiple times.
-4. Observed the page switching between the two EC2 instances’ homepages, showing their private IPs (`12.0.1.142`, `12.0.3.160`).
+4. Observed the page switching between the two EC2 instances’ homepages, showing their private IPs (`12.0.1.195`, `12.0.1.75`).
 
 I confirmed the Target Group’s health status as “healthy” for both instances after ALB activation.
 
@@ -221,6 +239,8 @@ I validated:
 - The ALB distributed traffic across both EC2 instances, alternating IPs in the browser.
 - Each EC2 instance’s Apache server was accessible via its public IP.
 - The Target Group’s health checks confirmed instance responsiveness.
+
+https://github.com/FeEgyir/Understanding-AWS-Services/blob/main/All%20Images/refreshing.mp4
 
 ## Key Learnings
 I gained insights into:
@@ -233,7 +253,7 @@ I gained insights into:
 - Configured Internet Gateway and route table for connectivity.
 
 ### EC2 Setup:
-- Automated Apache installation with user data.
+- Automated Apache installation on Ubuntu & Amazon Linux instances using OS-specific with user data.
 - Secured instances with SSH and HTTP security group rules.
 
 ### Target Groups: 
