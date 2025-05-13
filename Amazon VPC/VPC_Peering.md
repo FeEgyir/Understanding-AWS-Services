@@ -1,4 +1,4 @@
-# AWS VPC Peering Implementation Guide
+# AWS VPC Peering
 
 ## Introduction
 
