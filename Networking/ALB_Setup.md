@@ -225,44 +225,40 @@ I validated:
 ## Key Learnings
 I gained insights into:
 
-ALB Role: Distributes HTTP traffic for scalability and availability.
-Networking:
-Built a VPC with public subnets across Availability Zones.
-Configured Internet Gateway and route table for connectivity.
+### ALB Role: 
+- Distributes HTTP traffic for scalability and availability.
 
+### Networking:
+- Built a VPC with public subnets across Availability Zones.
+- Configured Internet Gateway and route table for connectivity.
 
-EC2 Setup:
-Automated Apache installation with user data.
-Secured instances with SSH and HTTP security group rules.
+### EC2 Setup:
+- Automated Apache installation with user data.
+- Secured instances with SSH and HTTP security group rules.
 
+### Target Groups: 
+- Enabled health checks and instance grouping.
 
-Target Groups: Enabled health checks and instance grouping.
-ALB Configuration:
-Set up an internet-facing ALB with proper listeners and security.
-Linked it to a Target Group for routing.
+### ALB Configuration:
+- Set up an internet-facing ALB with proper listeners and security.
+- Linked it to a Target Group for routing.
 
-
-Testing: Confirmed load balancing via DNS name access.
-
-Next Steps
+## Testing: Confirmed load balancing via DNS name access.
 To enhance this setup, I could:
 
-Add HTTPS with AWS Certificate Manager.
-Implement Auto Scaling for dynamic instance management.
-Monitor ALB and instances with CloudWatch.
-Explore path-based routing for advanced traffic rules.
-Test a Network Load Balancer for Layer 4 use cases.
+1. Add HTTPS with AWS Certificate Manager.
+2. Implement Auto Scaling for dynamic instance management.
+3. Monitor ALB and instances with CloudWatch.
+4. Explore path-based routing for advanced traffic rules.
+5. Test a Network Load Balancer for Layer 4 use cases.
 
-Troubleshooting Tips
+## Troubleshooting Tips
 If issues occur, I’d check:
-Security Groups: Verify HTTP (Port 80) for ALB and EC2, SSH (Port 22) for EC2.
-
-Route Table: Ensure 0.0.0.0/0 routes to the Internet Gateway and subnets are associated.
-Target Group: Confirm “healthy” status (check Apache and health check path).
-Subnets: Verify both are public and mapped to the ALB.
-DNS: Ensure the ALB’s DNS name resolves correctly.
-
-
+1. Security Groups: Verify HTTP (Port 80) for ALB and EC2, SSH (Port 22) for EC2.
+2. Route Table: Ensure 0.0.0.0/0 routes to the Internet Gateway and subnets are associated.
+3. Target Group: Confirm “healthy” status (check Apache and health check path).
+4. Subnets: Verify both are public and mapped to the ALB.
+5. DNS: Ensure the ALB’s DNS name resolves correctly.
 
 ## Conclusion
 Setting up an AWS Application Load Balancer was a valuable learning experience, reinforcing my understanding of load balancing and AWS networking. By creating a VPC, subnets, EC2 instances, a Target Group, and an ALB, I built a scalable web application infrastructure. This process equipped me with practical skills for implementing high-availability solutions in AWS.
