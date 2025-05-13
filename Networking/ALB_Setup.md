@@ -240,7 +240,8 @@ I validated:
 - Each EC2 instance’s Apache server was accessible via its public IP.
 - The Target Group’s health checks confirmed instance responsiveness.
 
-https://github.com/FeEgyir/Understanding-AWS-Services/blob/main/All%20Images/refreshing.mp4
+[watch the video](https://github.com/user-attachments/assets/03f92851-389e-49dc-a84d-d43454a80ce2)
+
 
 ## Key Learnings
 I gained insights into:
