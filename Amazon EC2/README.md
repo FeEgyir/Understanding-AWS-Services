@@ -61,7 +61,4 @@ graph LR
 | Run containers | ECS/EKS | Better for microservices |
 
 ## 🚀 Where to Go From Here
-1. How to Launch an EC2 instance and SSH into it 
-2. Understanding Basition Host
-3. Understanding AWS USer Data
-4. Understanding EC2 Launch Template and Source Template  
+Check the repository. 
