@@ -1,4 +1,4 @@
-# My Journey with AWS EC2 User Data Scripts
+# AWS EC2 User Data Scripts
 
 During my recent AWS exploration, I discovered a powerful feature that significantly improved my workflow: EC2 user data scripts. Today, I want to share what I learned about using these scripts to automate the installation of packages during EC2 instance creation.
 
@@ -23,9 +23,10 @@ For my first experiment, I decided to create a simple script to install Apache2 
 
 ```bash
 #!/bin/bash
-# Install Apache2 web server
-yes | sudo apt update
-yes | sudo apt install apache2 -y
+dnf update -y
+dnf install httpd -y
+systemctl start httpd
+systemctl enable httpd
 ```
 
 This script does two things:
@@ -50,9 +51,10 @@ The critical step came in the "Advanced details" section. Here, I found the "Use
 
 ```bash
 #!/bin/bash
-# Script to install Apache2
-yes | sudo apt update
-yes | sudo apt install apache2 -y
+dnf update -y
+dnf install httpd -y
+systemctl start httpd
+systemctl enable httpd
 ```
 
 ### 3. Verifying Installation Success
@@ -63,7 +65,7 @@ After launching the instance and waiting for it to initialize (this took about 2
 2. Pasting it into my browser
 3. Seeing the Apache2 default welcome page load successfully
 
-I was thrilled when I saw the "It works!" Apache page without having to SSH into the instance and install anything manually.
+I was thrilled when I saw the "Server IP" Apache page without having to SSH into the instance and install anything manually.
 
 ## Taking It Further: Installing Multiple Packages
 
